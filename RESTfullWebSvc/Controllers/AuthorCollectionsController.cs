@@ -48,7 +48,7 @@ namespace RESTfullWebSvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult<IEnumerable<AuthorDto>> CreateAuthorCollection(IEnumerable<AuthorForCreationgDto> authorCollection)
+        public ActionResult<IEnumerable<AuthorDto>> CreateAuthorCollection(IEnumerable<AuthorForCreationDto> authorCollection)
         {
             var authorEntities = _mapper.Map<IEnumerable<Author>>(authorCollection);
             

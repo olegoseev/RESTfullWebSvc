@@ -46,7 +46,7 @@ namespace RESTfullWebSvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AuthorDto> CreateAuthor(AuthorForCreationgDto author)
+        public ActionResult<AuthorDto> CreateAuthor(AuthorForCreationDto author)
         {
             var authorEntity = _mapper.Map<Author>(author);
             _libraryRepository.AddAuthor(authorEntity);

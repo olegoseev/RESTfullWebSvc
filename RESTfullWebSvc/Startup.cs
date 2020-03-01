@@ -41,12 +41,35 @@ namespace RESTfullWebSvc
                     @"Server=(localdb)\mssqllocaldb;Database=CourseLibraryDB;Trusted_Connection=True;");
             });
 
-            services.AddControllers(options => 
+            services.AddControllers(options =>
             {
                 options.ReturnHttpNotAcceptable = true;
             })
-            .AddXmlDataContractSerializerFormatters();
+            .AddXmlDataContractSerializerFormatters()
+            .ConfigureApiBehaviorOptions(setupAction =>
+            {
+                setupAction.InvalidModelStateResponseFactory = InvalidModelStateResponse;
+            });
         }
+
+        Func<ActionContext, IActionResult> InvalidModelStateResponse = context =>
+        {
+            var problemDetails = new ValidationProblemDetails(context.ModelState)
+            {
+                Type = "https://myawesomeservice.com/modelvalidationproblem",
+                Title = "One or more model validation errors occured",
+                Status = StatusCodes.Status422UnprocessableEntity,
+                Detail = "See the errors property for details",
+                Instance = context.HttpContext.Request.Path
+            };
+
+            problemDetails.Extensions.Add("traceId", context.HttpContext.TraceIdentifier);
+            return new UnprocessableEntityObjectResult(problemDetails)
+            {
+                ContentTypes = { "application/problem+json" }
+            };
+        };
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
