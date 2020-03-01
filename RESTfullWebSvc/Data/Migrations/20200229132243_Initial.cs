@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RESTfullWebSvc.Migrations
+namespace RESTfullWebSvc.Data.Migrations
 {
     public partial class Initial : Migration
     {

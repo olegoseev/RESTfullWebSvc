@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using RESTfullWebSvc.Entities;
+using RESTfullWebSvc.Data.Entities;
 
-namespace RESTfullWebSvc.DbContexts
+namespace RESTfullWebSvc.Data.DbContexts
 {
     public class LibraryDbContext : DbContext
     {

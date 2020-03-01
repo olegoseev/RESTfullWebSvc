@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RESTfullWebSvc.DbContexts;
+using RESTfullWebSvc.Data.DbContexts;
 
-namespace RESTfullWebSvc.Migrations
+namespace RESTfullWebSvc.Data.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    partial class LibraryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200229132243_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,7 @@ namespace RESTfullWebSvc.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RESTfullWebSvc.Entities.Author", b =>
+            modelBuilder.Entity("RESTfullWebSvc.Data.Entities.Author", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,7 +108,7 @@ namespace RESTfullWebSvc.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RESTfullWebSvc.Entities.Course", b =>
+            modelBuilder.Entity("RESTfullWebSvc.Data.Entities.Course", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -161,9 +163,9 @@ namespace RESTfullWebSvc.Migrations
                         });
                 });
 
-            modelBuilder.Entity("RESTfullWebSvc.Entities.Course", b =>
+            modelBuilder.Entity("RESTfullWebSvc.Data.Entities.Course", b =>
                 {
-                    b.HasOne("RESTfullWebSvc.Entities.Author", "Author")
+                    b.HasOne("RESTfullWebSvc.Data.Entities.Author", "Author")
                         .WithMany("Courses")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)

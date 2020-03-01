@@ -2,16 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using RESTfullWebSvc.DbContexts;
+using RESTfullWebSvc.Data.DbContexts;
 using RESTfullWebSvc.Services;
 
 namespace RESTfullWebSvc
@@ -28,6 +31,8 @@ namespace RESTfullWebSvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<ILibraryRepository, LibraryRepository>();
 
             services.AddDbContext<LibraryDbContext>(options =>
@@ -36,7 +41,11 @@ namespace RESTfullWebSvc
                     @"Server=(localdb)\mssqllocaldb;Database=CourseLibraryDB;Trusted_Connection=True;");
             });
 
-            services.AddControllers();
+            services.AddControllers(options => 
+            {
+                options.ReturnHttpNotAcceptable = true;
+            })
+            .AddXmlDataContractSerializerFormatters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +54,17 @@ namespace RESTfullWebSvc
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler(options =>
+                {
+                    options.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("An unexpected fault happened. Try again later");
+                    });
+                });
             }
 
             app.UseHttpsRedirection();

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RESTfullWebSvc.Entities
+namespace RESTfullWebSvc.Data.Entities
 {
     public class Author
     {
