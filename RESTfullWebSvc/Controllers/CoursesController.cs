@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using RESTfullWebSvc.Data.Entities;
 using RESTfullWebSvc.Data.Models;
 using RESTfullWebSvc.Services;
 
@@ -51,6 +52,23 @@ namespace RESTfullWebSvc.Controllers
             }
 
             return Ok(_mapper.Map<CourseDto>(course));
+        }
+
+        [HttpPost]
+        public ActionResult<CourseDto> CreateCourseForAuthor(Guid authorId, CourseForCreationDto course)
+        {
+            if(!_libraryRepository.AuthorExists(authorId))
+            {
+                return NotFound();
+            }
+
+            var courseEntity = _mapper.Map<Course>(course);
+            _libraryRepository.AddCourse(authorId, courseEntity);
+            _libraryRepository.Save();
+
+            var courseToReturn = _mapper.Map<CourseDto>(courseEntity);
+            return CreatedAtAction(nameof(GetCourseForAuthor),
+                new { authorId = authorId, courseId = courseToReturn.Id }, courseToReturn);
         }
     }
 }

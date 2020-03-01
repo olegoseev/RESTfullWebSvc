@@ -21,6 +21,8 @@ namespace RESTfullWebSvc.Profiles
                 .ForMember(
                     dest => dest.Age,
                     opt => opt.MapFrom(src => src.DateOfBirth.GetCurrentAge()));
+
+            CreateMap<AuthorForCreationgDto, Author>();
         }
     }
 }

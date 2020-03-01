@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RESTfullWebSvc.Data.Entities;
+using RESTfullWebSvc.ResourceParameters;
 
 namespace RESTfullWebSvc.Services
 {
@@ -14,6 +15,7 @@ namespace RESTfullWebSvc.Services
         void AddCourse(Guid authorId, Course course);
         void UpdateCourse(Course course);
         void DeleteCourse(Course course);
+        IEnumerable<Author> GetAuthors(AuthorsResourceParameters authorsResourceParameters);
         IEnumerable<Author> GetAuthors();
         Author GetAuthor(Guid authorId);
         IEnumerable<Author> GetAuthors(IEnumerable<Guid> authorIds);
