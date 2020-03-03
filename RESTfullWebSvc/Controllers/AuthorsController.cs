@@ -58,5 +58,21 @@ namespace RESTfullWebSvc.Controllers
             Response.Headers.Add("Allow", "GET, OPTIONS, POST");
             return Ok();
         }
+
+        [HttpDelete("{authorId}")]
+        public ActionResult DeleteAuthor(Guid authorId)
+        {
+            var authorFromRepo = _libraryRepository.GetAuthor(authorId);
+
+            if(authorFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _libraryRepository.DeleteAuthor(authorFromRepo);
+            _libraryRepository.Save();
+
+            return NoContent();
+        }
     }
 }
