@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using RESTfullWebSvc.Data.Models;
 
 namespace RESTfullWebSvc.ValidationAttributes
@@ -12,13 +7,13 @@ namespace RESTfullWebSvc.ValidationAttributes
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var course = (CourseForCreationDto)value;
+            var course = (CourseForChangingDto)value;
 
             if (course.Title == course.Description)
             {
                 return new ValidationResult(
                     string.IsNullOrWhiteSpace(ErrorMessage) ? "The provided description should be different from the title" : ErrorMessage,
-                    new[] { nameof(CourseForCreationDto) });
+                    new[] { nameof(CourseForChangingDto) });
             }
 
             return ValidationResult.Success;

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using RESTfullWebSvc.Data.Entities;
-using RESTfullWebSvc.Data.Models;
+﻿using AutoMapper;
+
 
 namespace RESTfullWebSvc.Profiles
 {
@@ -13,8 +7,10 @@ namespace RESTfullWebSvc.Profiles
     {
         public CoursesProfile()
         {
-            CreateMap<Course, CourseDto>();
-            CreateMap<CourseForCreationDto, Course>();
+            CreateMap<Data.Entities.Course, Data.Models.CourseDto>();
+            CreateMap<Data.Models.CourseForCreationDto, Data.Entities.Course>();
+            CreateMap<Data.Models.CourseForUpdateDto, Data.Entities.Course>();
+            CreateMap<Data.Entities.Course, Data.Models.CourseForUpdateDto>();
         }
     }
 }

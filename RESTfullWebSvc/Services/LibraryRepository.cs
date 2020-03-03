@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RESTfullWebSvc.Data.DbContexts;
 using RESTfullWebSvc.Data.Entities;
@@ -66,7 +64,7 @@ namespace RESTfullWebSvc.Services
                         .OrderBy(c => c.Title).ToList();
         }
 
-        public void UpdateCourse(Course course)
+        public virtual void UpdateCourse(Course course)
         {
             // no code in this implementation
         }
@@ -159,7 +157,7 @@ namespace RESTfullWebSvc.Services
                 .ToList();
         }
 
-        public void UpdateAuthor(Author author)
+        public virtual void UpdateAuthor(Author author)
         {
             // no code in this implementation
         }
